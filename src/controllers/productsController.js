@@ -51,7 +51,20 @@ const controller = {
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		// Do the magic
+		db.Products.create({
+			title: req.body.title,
+			description: req.body.description,
+			photo: "/images/products/"+ req.files[0].filename,
+			price: req.body.price,
+			stock: req.body.stock,
+			brand_id: req.body.brand,   
+			category_id: req.body.category,
+			
+		  }).then(data=>res.redirect("/detail"))
+	
+		  .catch(error=>console.log(error))
+	
+	 
 	},
 
 	// Update - Form to edit

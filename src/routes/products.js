@@ -1,16 +1,24 @@
 // ************ Require's ************
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
+
+// MIDDLEWARES
+const storage = require("../middlewares/storeMulter");
+const uploads = multer({storage: storage});
+
+
 
 /*** GET ALL PRODUCTS ***/ 
 router.get('/', productsController.index); 
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create', productsController.create); 
-router.post('/', productsController.store); 
+router.post('/create',uploads.any(), productsController.store); 
 
 
 /*** GET ONE PRODUCT ***/ 
