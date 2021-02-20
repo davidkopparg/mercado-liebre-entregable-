@@ -45,10 +45,10 @@
 					
 					<div class="col-12 col-md-6">
 						<label for="brand" class="form-label">Marcas:</label>
-						<select name="category" id="category" class="form-input">
-							<option value="">Elegí</option>
-							<option value="in-sale">En oferta</option>
-							<option value="visited">Últimos agregados</option>
+						<select name="brand" id="brand" class="form-input">
+							<% marcas.forEach(marca => { %>
+								<option value="<%=marca.id%>"><%=marca.name%></option>	
+							<%})%>
 						</select>
 
 						<div>
