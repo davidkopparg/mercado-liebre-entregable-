@@ -1,4 +1,5 @@
 const toThousand = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+const { promiseImpl } = require("ejs");
 const db = require("../../database/models/index")
 
 
@@ -35,7 +36,17 @@ const controller = {
 
 	// Create - Form to create
 	create: (req, res) => {
-		res.render("product-create-form")
+		let marcas = db.Brands.findAll();
+		let categorias= db.Categories.findAll();
+
+		Promise.all([marcas,categorias])
+		.then(function([marca,categoria]){
+				res.render("product-create-form",{marca,categoria})
+
+		})
+	  .catch(function(err){
+		  console.log(err)
+	  })
 	},
 	
 	// Create -  Method to store
