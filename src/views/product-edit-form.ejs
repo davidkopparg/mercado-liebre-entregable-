@@ -14,15 +14,15 @@
 			</div>
 		</div>
 		<div class="col-12">
-			<form action="/products/edit/<%=product.id%>?_method=PUT" method="POST">
+			<form action="/products/edit/<%=product.id%>?_method=PATCH" method="POST" enctype="multipart/form-data">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
 						<label for="name" class="form-label">Nombre del producto:</label>
-						<input type="text" id="name" name="name" value="<%= product.title%>" placeholder="Ej: Zapatillas Reebok" class="form-input">
+						<input type="text" id="title" name="title" value="<%= product.title%>" placeholder="Ej: Zapatillas Reebok" class="form-input">
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="price" class="form-label">Precio del producto:</label>
-						<input type="text" id="price" name="price" value="<%= product.price%>" placeholder="Ej: 5678" class="form-input">
+						<input type="number" id="price" name="price" value="<%= product.price%>" placeholder="Ej: 5678" class="form-input">
 					</div>
 					<div class="col-12 col-md-6">
 						<label for="discount" class="form-label">Stock</label>
@@ -35,7 +35,11 @@
 								<option value="<%=product.category.id%>"><%=product.category.name%></option>	
 						</select>
 					</div>
-					
+					<div>
+						<label class="form-label">Subir fotos del producto</label>
+						<input required class="form-label" ide="file-input" multiple="multiple" type="file"
+							name="adjunto" accept=".pdf,.jpg,.png">
+					</div>
 					<div class="col-12">
 						<label for="description" class="form-label">Descipción:</label>
 						<textarea name="description" id="description" class="form-input"><%= product.description %></textarea>
