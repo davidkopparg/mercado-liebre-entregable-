@@ -60,7 +60,7 @@ const controller = {
 			brand_id: req.body.brand,   
 			category_id: req.body.category,
 			
-		  }).then(data=>res.redirect("/detail"))
+		  }).then(data=>res.redirect("/products/"+data.id))
 	
 		  .catch(error=>console.log(error))
 	
