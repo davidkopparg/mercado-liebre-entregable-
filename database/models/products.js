@@ -12,8 +12,8 @@ module.exports =  function(sequelize, dataTypes){
             allowNull: false
         },
         title:{
-            type : dataTypes.STRING(100),
-            allowNull: false
+          type : dataTypes.STRING(100),
+         allowNull: false
         },
 
         description:{ 
@@ -67,7 +67,7 @@ module.exports =  function(sequelize, dataTypes){
          
            
             
-        Products.belongsTo(models.Categorys, {
+        Products.belongsTo(models.Categories, {
         
             as: "category",
             foreignKey: "category_id"
