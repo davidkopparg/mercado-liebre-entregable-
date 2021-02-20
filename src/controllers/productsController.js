@@ -69,6 +69,7 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
+		
 		db.Products.findByPk(req.params.id, {
 			include : ['category']
 		})
