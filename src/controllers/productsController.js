@@ -40,8 +40,8 @@ const controller = {
 		let categorias= db.Categories.findAll();
 
 		Promise.all([marcas,categorias])
-		.then(function([marca,categoria]){
-				res.render("product-create-form",{marca,categoria})
+		.then(function([marcas,categorias]){
+				res.render("product-create-form",{marcas,categorias})
 
 		})
 	  .catch(function(err){
