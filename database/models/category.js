@@ -16,10 +16,10 @@ module.exports =  function(sequelize, dataTypes){
         }
         let config = {
             tableName: "categories",
-            timestamps: true,
-            createdAt: "created_at",
-            updatedAt: "updated_at",
-            deletedAt: "deleted_at", 
+            timestamps: false,
+            //createdAt: "created_at",
+            //updatedAt: "updated_at",
+            //deletedAt: "deleted_at", 
             paranoid: true
         }
 

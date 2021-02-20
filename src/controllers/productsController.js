@@ -45,8 +45,19 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		res.render('product-edit-form');
+		db.Products.findByPk(req.params.id, {
+			include : ['category']
+		})
+		.then(function(product){
+		 
+  return res.render('product-edit-form', { product:product});
+	
+		}).catch(function(err) {
+	  console.log(err)
+		})  
 	},
+
+	
 	// Update - Method to update
 	update: (req, res) => {
 		// Do the magic
