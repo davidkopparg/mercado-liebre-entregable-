@@ -3,7 +3,9 @@ const {
 	promiseImpl
 } = require("ejs");
 const db = require("../../database/models/index")
-
+const {
+	validationResult
+} = require("express-validator")
 
 const controller = {
 	// Root - Show all products
@@ -42,6 +44,7 @@ const controller = {
 
 	// Create - Form to create
 	create: (req, res) => {
+
 		let marcas = db.Brands.findAll();
 		let categorias = db.Categories.findAll();
 
@@ -49,7 +52,7 @@ const controller = {
 			.then(function ([marcas, categorias]) {
 				res.render("product-create-form", {
 					marcas,
-					categorias
+					categorias,errors:{}
 				})
 
 			})
@@ -60,18 +63,50 @@ const controller = {
 
 	// Create -  Method to store
 	store: (req, res) => {
-		db.Products.create({
-				title: req.body.title,
-				description: req.body.description,
-				photo: "/images/products/" + req.files[0].filename,
-				price: req.body.price,
-				stock: req.body.stock,
-				brand_id: req.body.brand,
-				category_id: req.body.category,
 
-			}).then(data => res.redirect("/products/" + data.id))
+		//validaciones
+		let errors = validationResult(req)
+		if (errors.isEmpty()) {
 
-			.catch(error => console.log(error))
+			db.Products.create({
+					title: req.body.title,
+					description: req.body.description,
+					photo: "/images/products/" + req.files[0].filename,
+					price: req.body.price,
+					stock: req.body.stock,
+					brand_id: req.body.brand,
+					category_id: req.body.category,
+
+				}).then(data => res.redirect("/products/" + data.id))
+
+				.catch(error => console.log(error))
+
+
+		} else {
+
+			let marcas = db.Brands.findAll();
+			let categorias = db.Categories.findAll();
+	
+			Promise.all([marcas, categorias])
+				.then(function ([marcas, categorias]) {
+			
+			
+					res.render("product-create-form",{marcas,categorias,errors:errors.mapped()})
+				
+				})
+				.catch(function (err) {
+					console.log(err)
+				})
+
+
+				
+		}
+
+
+
+
+
+
 
 
 	},
@@ -105,29 +140,29 @@ const controller = {
 
 			})
 			.then(function (product) {
-					if (req.files.length==0){
-						
-						foto=product.photo
-						
-					}else{
+				if (req.files.length == 0) {
 
-				        foto= "/images/products/" + req.files[0].filename	
-						console.log(foto)
-					}
-					db.Products.update({
+					foto = product.photo
+
+				} else {
+
+					foto = "/images/products/" + req.files[0].filename
+					console.log(foto)
+				}
+				db.Products.update({
 						title: req.body.title,
 						description: req.body.description,
 						photo: foto,
 						price: req.body.price,
 						stock: req.body.stock,
-		
+
 					}, {
 						where: {
 							id: req.params.id
 						}
-		
+
 					}).then(data => res.redirect("/products/" + req.params.id))
-		
+
 					.catch(error => console.log(error))
 
 			}).catch(function (err) {
@@ -137,7 +172,7 @@ const controller = {
 
 
 
-	
+
 	},
 
 	// Delete - Delete one product from DB

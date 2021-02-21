@@ -10,7 +10,7 @@ const productsController = require('../controllers/productsController');
 // MIDDLEWARES
 const storage = require("../middlewares/storeMulter");
 const uploads = multer({storage: storage});
-
+const validationMiddleware= require("../middlewares/validations")
 
 
 /*** GET ALL PRODUCTS ***/ 
@@ -18,7 +18,7 @@ router.get('/', productsController.index);
 
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create', productsController.create); 
-router.post('/create',uploads.any(), productsController.store); 
+router.post('/create',uploads.any(),validationMiddleware, productsController.store); 
 
 
 /*** GET ONE PRODUCT ***/ 
