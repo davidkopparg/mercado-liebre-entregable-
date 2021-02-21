@@ -52,7 +52,7 @@ const controller = {
 			.then(function ([marcas, categorias]) {
 				res.render("product-create-form", {
 					marcas,
-					categorias,errors:{}
+					categorias,errors:{},body:{}
 				})
 
 			})
@@ -86,12 +86,12 @@ const controller = {
 
 			let marcas = db.Brands.findAll();
 			let categorias = db.Categories.findAll();
-	
+			let body=req.body
 			Promise.all([marcas, categorias])
 				.then(function ([marcas, categorias]) {
 			
 			
-					res.render("product-create-form",{marcas,categorias,errors:errors.mapped()})
+					res.render("product-create-form",{marcas,categorias,errors:errors.mapped(),body})
 				
 				})
 				.catch(function (err) {
