@@ -84,7 +84,7 @@ const controller = {
 		});
 		Promise.all([editMarcas, product])
 			.then(function ([editMarcas, product]) {
-					
+
 				res.render("product-edit-form", {
 					editMarcas,
 					product
@@ -98,24 +98,46 @@ const controller = {
 
 	// Update - Method to update
 	update: (req, res) => {
-		
-					
-	
-		db.Products.update({
-				title: req.body.title,
-				description: req.body.description,
-				photo: "/images/products/" + req.files[0].filename,
-				price: req.body.price,
-				stock: req.body.stock,
 
-			}, {
-				where: {
-					id: req.params.id
-				}
-				
-			}).then(data => res.redirect("/products/" + req.params.id))
-			
-			.catch(error => console.log(error))
+		//chequea si hay una foto nueva para cambiar o no 
+		let foto;
+		db.Products.findByPk(req.params.id, {
+
+			})
+			.then(function (product) {
+					if (req.files.length==0){
+						
+						foto=product.photo
+						
+					}else{
+
+				        foto= "/images/products/" + req.files[0].filename	
+						console.log(foto)
+					}
+					db.Products.update({
+						title: req.body.title,
+						description: req.body.description,
+						photo: foto,
+						price: req.body.price,
+						stock: req.body.stock,
+		
+					}, {
+						where: {
+							id: req.params.id
+						}
+		
+					}).then(data => res.redirect("/products/" + req.params.id))
+		
+					.catch(error => console.log(error))
+
+			}).catch(function (err) {
+				console.log(err)
+			})
+		//  termina el chequeo
+
+
+
+	
 	},
 
 	// Delete - Delete one product from DB
