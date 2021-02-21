@@ -69,14 +69,14 @@ const controller = {
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		
-		db.Products.findByPk(req.params.id, {
+		let editMarcas = db.Brands.findAll();
+		let product= db.Products.findByPk(req.params.id, {
 			include : ['category']
-		})
-		.then(function(product){
-		 
-  return res.render('product-edit-form', { product:product});
-	
+		});
+		Promise.all([editMarcas,product])
+		.then(function([editMarcas,product]){
+				res.render("product-edit-form",{editMarcas,product})
+		
 		}).catch(function(err) {
 	  console.log(err)
 		})  

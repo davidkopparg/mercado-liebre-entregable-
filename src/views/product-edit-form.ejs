@@ -30,10 +30,16 @@
 					</div>
 
 					<div class="col-12 col-md-6">
-						<label for="category" class="form-label">Categoría:</label>
-						<select name="category" id="category" class="form-input">
-								<option value="<%=product.category.id%>"><%=product.category.name%></option>	
+						<label for="brand" class="form-label">Marcas:</label>
+						<select name="brand" id="brand" class="form-input">
+							<option value="<%=product.category.id%>"><%=product.category.name%></option>
+							<% editMarcas.forEach(marca => { %>
+								
+								<option value="<%=marca.id%>"><%=marca.name%></option>	
+							<%})%>
 						</select>
+	
+						
 					</div>
 					<div>
 						<label class="form-label">Subir fotos del producto</label>
