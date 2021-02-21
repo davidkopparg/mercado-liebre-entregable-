@@ -87,24 +87,39 @@ const controller = {
 			let marcas = db.Brands.findAll();
 			let categorias = db.Categories.findAll();
 			let body=req.body
-			Promise.all([marcas, categorias])
+						//recordando la categoria y la marca elegida
+						//db.Brands.findOne({
+						//	where: {
+						//		id :req.body.brand
+						//	}
+						//}).then((resultado) =>{
+						//	let recordarMarca= resultado
+					//		console.log(recordarMarca)
+						//});
+						//let recordarCaterogia= db.Categories.findOne({
+						//	where: {
+						//		id :req.body.category
+					//		}
+						//}).then((resultado) =>{
+						//	return resultado
+					//	});
+						//////////////////////////////////////////////////
+						
+						
+			Promise.all([marcas, categorias,])
 				.then(function ([marcas, categorias]) {
 			
-			
 					res.render("product-create-form",{marcas,categorias,errors:errors.mapped(),body})
-				
+					console.log(body)
+					console.log(recordarCategoria)
 				})
 				.catch(function (err) {
-					console.log(err)
+				
 				})
 
 
 				
 		}
-
-
-
-
 
 
 

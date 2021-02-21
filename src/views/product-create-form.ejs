@@ -68,7 +68,7 @@
 					<div class="col-12">
 						
 						<label for="description" class="form-label">Descipción:</label>
-						<textarea name="description" value="<%=body.description%>" id="description" class="form-input"></textarea>
+						<textarea name="description"  id="description" class="form-input"><%=body.description%></textarea>
 					</div>
 					<p class="errores"><%= typeof errors.description == "undefined" ? "" : errors.description.msg %></p>
 					<div class="col-12">
